@@ -5,6 +5,8 @@ import lombok.*;
 import com.sipoh.dispositif.entity.enumeration.ContactProfil;
 
 import jakarta.validation.constraints.NotNull;
+
+
 import jakarta.validation.constraints.Size;
 
 
@@ -18,7 +20,6 @@ public class ContactUrgenceDto {
     private String id;
 
     @NotNull(message = "Le numero ne doit etre null")
-    @Size(min = 6,max = 6 , message = "L'ID doit avoir 6 charactere")
     private Integer numero;
 
     @NotNull(message = "Le nom ne doit etre null")

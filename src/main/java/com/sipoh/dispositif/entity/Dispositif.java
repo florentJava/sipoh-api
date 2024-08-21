@@ -36,20 +36,20 @@ public class Dispositif {
     @Column 
     private String utilisateurId;
 
-    // list des contacts d'urgences
+    
+    
     @OneToMany(
         mappedBy = "dispositif",
         cascade = CascadeType.ALL,
         orphanRemoval = true
-    )
-    private List<ContactUrgence> contacts;
-
-
-    @OneToMany(
-        mappedBy = "dispositif",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private List<EnregistrementAudio> audios;
-
+        )
+        private List<EnregistrementAudio> audios;
+        
+        // list des contacts d'urgences
+        @OneToMany(
+            mappedBy = "dispositif",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+        )
+        private List<ContactUrgence> contacts;
 }

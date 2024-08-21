@@ -6,6 +6,8 @@ import lombok.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -32,7 +34,7 @@ public class ContactUrgence {
     private String prenom;
 
     // Le contact d'urgence est il votre pere , mere etc ?
-    @Column
+    @Enumerated(EnumType.STRING)
     private ContactProfil profil; 
 
     @ManyToOne(        

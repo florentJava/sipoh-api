@@ -78,5 +78,20 @@ public class ExceptionHandling {
     }
 
 
+    /*
+     * Capture des UnsupportedOperationException
+     */
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ExceptionHandler(UnsupportedOperationException.class)
+    @ResponseBody
+    public Map<String, String> handleRuntimeExeption(UnsupportedOperationException ex){
+
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return errorResponse;
+
+    }
+
+
 
 }
