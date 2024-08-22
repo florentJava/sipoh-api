@@ -1,8 +1,6 @@
 package com.sipoh.dispositif.entity;
 
 
-
-
 import lombok.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,8 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+
+import java.util.UUID;
+
+
 
 import java.time.LocalDateTime;
+
 
 
 
@@ -22,6 +26,7 @@ import java.time.LocalDateTime;
 public class EnregistrementAudio {
     
     @Id
+    @Column(updatable = false, nullable = false)
     private String id;
 
     @Column
@@ -47,6 +52,14 @@ public class EnregistrementAudio {
     })
     @JoinColumn(name="id_dispositif")
     private Dispositif dispositif;
+
+
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
+    }
 
 
 }

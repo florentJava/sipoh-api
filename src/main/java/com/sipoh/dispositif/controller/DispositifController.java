@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sipoh.dispositif.controller.api.DispositifInterface;
+import com.sipoh.dispositif.dtos.ContactUrgenceDto;
 import com.sipoh.dispositif.dtos.DispositifDto;
+import com.sipoh.dispositif.dtos.EnregistrementAudioDto;
+import com.sipoh.dispositif.service.AudioService;
+import com.sipoh.dispositif.service.ContactService;
 import com.sipoh.dispositif.service.DispositifService;
 
 import jakarta.validation.Valid;
@@ -21,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class DispositifController implements DispositifInterface {
 
     private final DispositifService dispositifService;
+    private final AudioService audioService;
+    private final ContactService contactService;    
 
 
     @Override
@@ -39,7 +45,6 @@ public class DispositifController implements DispositifInterface {
 
     @Override
     public ResponseEntity<List<DispositifDto>> getUserDispos(String user_id) {
-        // TODO Auto-generated method stub
 
         List<DispositifDto> dispoDtos = dispositifService.getUserDispositifs(user_id);
 
@@ -50,17 +55,13 @@ public class DispositifController implements DispositifInterface {
 
     @Override
     public ResponseEntity<DispositifDto> getDispoById(String dispo_id) {
-        // TODO Auto-generated method stub
-
         DispositifDto dispoDto = dispositifService.getIspoById(dispo_id);
-        
         return ResponseEntity.ok().body(dispoDto);
     }
 
 
     @Override
     public ResponseEntity<DispositifDto> addUserToDispo(String dispo_id, String user_id) {
-        // TODO Auto-generated method stub
         DispositifDto dispositifDto = dispositifService.userToDispositif(user_id,dispo_id);
         return ResponseEntity.ok().body(dispositifDto);
     }
@@ -69,7 +70,26 @@ public class DispositifController implements DispositifInterface {
     @Override
     public ResponseEntity<DispositifDto> setDispositifStatut(String dispo_id,String statut) {
         // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'setDispositifStatut'");
+    }
+
+
+    @Override
+    public List<EnregistrementAudioDto> getAudioDtoFromDispo(String dispo_id) {
+
+        List<EnregistrementAudioDto> audiosDto = audioService.getUserAudios(dispo_id);
+        return audiosDto;
+
+    }
+
+
+    @Override
+    public List<ContactUrgenceDto> getContactDtoFromDispo(String dispo_id) {
+
+        List<ContactUrgenceDto> contactDto = contactService.getUserContact(dispo_id);
+
+        return contactDto;
     }
 
 

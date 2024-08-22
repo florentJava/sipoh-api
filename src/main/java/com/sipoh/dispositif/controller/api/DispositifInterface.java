@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import com.sipoh.dispositif.dtos.ContactUrgenceDto;
 import com.sipoh.dispositif.dtos.DispositifDto;
+import com.sipoh.dispositif.dtos.EnregistrementAudioDto;
+import com.sipoh.dispositif.entity.EnregistrementAudio;
 
 import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,12 +20,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface DispositifInterface {
+
+
     @Operation(
         summary = "Inserer un nouveau dispositif",
         description = "Insere les parametre d'un dipositif dans la bd",
         responses = {
         @ApiResponse(responseCode = "200", description = "Dispositif insere avec succès"),
-        @ApiResponse(responseCode = "400", description = "Requête invalide")
         }
     )
     @PostMapping("")
@@ -81,6 +85,26 @@ public interface DispositifInterface {
     @PutMapping("/{dispo_id}/statut/{statut}")
     public ResponseEntity<DispositifDto> setDispositifStatut(@PathVariable String dispo_id ,@PathVariable String statut);
 
+    @Operation(
+        summary = "obtenir les audios d'un dispositifs",
+        description = "",
+        responses = {
+        @ApiResponse(responseCode = "200", description = "operation effectuer avec succes"),
+        }
+    )
+    @GetMapping("/{dispo_id}/audios")
+    public List<EnregistrementAudioDto> getAudioDtoFromDispo(@PathVariable String dispo_id);
+
+
+    @Operation(
+        summary = "obtenir les contact d'un dispositifs",
+        description = "",
+        responses = {
+        @ApiResponse(responseCode = "200", description = "operation effectuer avec succes"),
+        }
+    )
+    @GetMapping("/{dispo_id}/contacts")
+    public List<ContactUrgenceDto> getContactDtoFromDispo(@PathVariable String dispo_id);
 
 
     // @Operation(

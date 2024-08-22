@@ -60,15 +60,18 @@ public class ContactService {
 
 
     /*
-     * recuperer les contacts d'un utilisateur
+     * recuperer les contacts d'un dispo
      */
     public List<ContactUrgenceDto> getUserContact(String dispoId){
 
-        Dispositif dispo = dispositifRepo.findById(dispoId).orElseThrow( () -> new EntityNotFoundException(""));
+        Dispositif dispo = dispositifRepo.findById(dispoId).orElseThrow( () -> new EntityNotFoundException("Dispositif not found"));
 
         List<ContactUrgence> contacts = contactUrgenceRepo.findByDispositif(dispo);
         List<ContactUrgenceDto> contactsDtos = contactMapper.mapContactUrgenceList(contacts);
 
+        contactsDtos.forEach(ct ->{
+            ct.setDispositifDto(null);
+        });
         return contactsDtos;
     }
 

@@ -102,7 +102,7 @@ public class DispositifService {
      * recuperer un dispositif a partir de son ID
      */
     @Transactional
-     public DispositifDto getIspoById(String dispoId){
+    public DispositifDto getIspoById(String dispoId){
 
         Dispositif dispo = dispositifRepo.findById(dispoId).orElseThrow(() -> new EntityNotFoundException("Dispositif not fount : ID = "+dispoId));
 

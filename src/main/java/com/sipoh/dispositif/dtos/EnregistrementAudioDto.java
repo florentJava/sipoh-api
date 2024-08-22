@@ -30,7 +30,7 @@ public class EnregistrementAudioDto {
 
     @NotNull(message = "La longitude ne doit pas etre null")
     private String longitude;
- 
+
     private DispositifDto dispositifDto;
 
 }

@@ -18,12 +18,12 @@ import jakarta.validation.Valid;
 
 public interface ContactInterface {
     
-
     @Operation(
         summary = "Inserer un nouveau contact"
     )
     @PostMapping("dispositif/{dispo_id}")
     public ResponseEntity<ContactUrgenceDto> createContact(@Valid @RequestBody ContactUrgenceDto contactUrgenceDto , @PathVariable String dispo_id);
+
 
     @Operation(
         summary = "supprimer contact"
