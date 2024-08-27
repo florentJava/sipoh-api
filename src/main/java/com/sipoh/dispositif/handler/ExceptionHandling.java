@@ -2,12 +2,14 @@ package com.sipoh.dispositif.handler;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.sipoh.dispositif.exception.GeneralException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -48,7 +50,17 @@ public class ExceptionHandling {
         return errors;
     }
 
+    /*
+     * Erreur du a l'expiration d'un token 
+     */
 
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<String> handleTokenExpiredException(TokenExpiredException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired. Please log in again.");
+    }
+    
     /*
      * Erreur lors de la recherche d'une entite dans la BD
      */

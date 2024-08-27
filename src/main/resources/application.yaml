@@ -18,20 +18,37 @@ spring:
         multipart:
             max-file-size: 10MB
             max-request-size: 15MB
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: 30509143239-3tscua2cc2pq59d6ot9ub71bhptotb66.apps.googleusercontent.com
+                        client-secret: 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
+                        scope: profile, email
+                        redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+                        # client-name: Google
+                provider:
+                    google:
+                        authorization-uri: https://accounts.google.com/o/oauth2/auth
+                        token-uri: https://oauth2.googleapis.com/token
+                        user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+                        user-name-attribute: sub
 
 
 server: 
     port: 8082
     servlet: 
-        context-path: /cb
+        context-path: /cb   
+
 
     
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-      fetch-registry: true
-      register-with-eureka: true
+# eureka:
+#   client:
+#     serviceUrl:
+#       defaultZone: http://localhost:8761/eureka/
+#       fetch-registry: true
+#       register-with-eureka: true
 
 
 
