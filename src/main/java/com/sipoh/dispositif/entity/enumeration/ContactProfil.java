@@ -11,6 +11,7 @@ public enum ContactProfil {
     FILS,
     FILLE,
     ONCLE,
-    TANTE
+    TANTE, 
+    AMI
 
 }

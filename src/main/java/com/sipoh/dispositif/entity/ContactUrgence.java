@@ -11,6 +11,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+
+import java.util.UUID;
 import com.sipoh.dispositif.entity.enumeration.ContactProfil;
 
 
@@ -44,5 +47,12 @@ public class ContactUrgence {
         })
     @JoinColumn(name="id_dispositif")
     private Dispositif dispositif;
+
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
+    }
 
 }

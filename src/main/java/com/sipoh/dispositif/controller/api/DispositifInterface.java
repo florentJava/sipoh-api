@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.sipoh.dispositif.dtos.ContactUrgenceDto;
 import com.sipoh.dispositif.dtos.DispositifDto;
 import com.sipoh.dispositif.dtos.EnregistrementAudioDto;
-import com.sipoh.dispositif.entity.EnregistrementAudio;
 
 import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;

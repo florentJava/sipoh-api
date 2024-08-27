@@ -9,7 +9,11 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+
 import java.util.List;
+import java.util.UUID;
+
 import java.time.LocalDateTime;
 import com.sipoh.dispositif.entity.enumeration.DispositifStatut;
 
@@ -20,7 +24,7 @@ import com.sipoh.dispositif.entity.enumeration.DispositifStatut;
 @Entity
 public class Dispositif {
     
-    // ID du dispositif. Il est attribue par le fabriquant
+    // ID du dispositif. Il est atotribue par le fabriquant
     @Id
     private String id;
 
@@ -52,4 +56,12 @@ public class Dispositif {
             orphanRemoval = true
         )
         private List<ContactUrgence> contacts;
+
+
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
+    }
 }
