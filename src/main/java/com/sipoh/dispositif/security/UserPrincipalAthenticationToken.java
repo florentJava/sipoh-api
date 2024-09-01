@@ -15,13 +15,11 @@ public class UserPrincipalAthenticationToken extends AbstractAuthenticationToken
 
     @Override
     public Object getCredentials() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public UserPrincipal getPrincipal() {
-        // TODO Auto-generated method stub
         return principal;
     }
 }

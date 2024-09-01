@@ -37,7 +37,7 @@ public class CustomUserDetailsSevices  implements UserDetailsService{
                 .userId(user.getId())
                 .password(user.getPassword())
                 .authorities( autorities )
-                .build();   
+                .build();
     }
     
 }
