@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.sipoh.dispositif.propertie.JwtProperties;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,10 +24,10 @@ public class JwtIssuer {
     public String issueToken(String userId, String email ,List<String> roles) {
         return JWT.create()
                 .withSubject(userId)
-                .withExpiresAt( Instant.now().plus ( Duration.of(10,ChronoUnit.MINUTES) )  )
+                .withExpiresAt( Instant.now().plus ( Duration.of(properties.getTime(),ChronoUnit.MINUTES) )  )
                 .withClaim("e", email)  
                 .withClaim("a", roles)
-                .sign(Algorithm.HMAC256(properties.getSecretKey()));
+                .sign(Algorithm.HMAC256(properties.getSecret()));
     }
     
 }

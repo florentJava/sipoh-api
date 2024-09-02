@@ -39,8 +39,12 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeRequests(authorize -> authorize
                 .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/oauth2/**").permitAll()
-                .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/oauth/**").permitAll()
+                .requestMatchers("/v3/**").permitAll()                
+                .requestMatchers("/message/**").permitAll()                
+                .requestMatchers("/oauth2/**").permitAll()
                 .anyRequest()
                 // .permitAll()
                 .authenticated()

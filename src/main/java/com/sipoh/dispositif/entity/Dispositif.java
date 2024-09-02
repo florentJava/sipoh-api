@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 
@@ -37,10 +38,15 @@ public class Dispositif {
     private DispositifStatut statut;
 
     // ID du proprietaire du dispositif
+
+    
     @Column 
     private String utilisateurId;
 
-    
+    // @ManyToOne()
+    // @JoinColumn(name="utilisateur_id")
+    // private UserEntity user;
+
     
     @OneToMany(
         mappedBy = "dispositif",

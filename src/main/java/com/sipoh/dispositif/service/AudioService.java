@@ -1,13 +1,18 @@
 package com.sipoh.dispositif.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-
-import java.util.List;
-import java.io.File;
-
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sipoh.dispositif.dtos.EnregistrementAudioDto;
 import com.sipoh.dispositif.entity.Dispositif;
@@ -16,17 +21,6 @@ import com.sipoh.dispositif.exception.GeneralException;
 import com.sipoh.dispositif.mapper.EnregistrementAudioMapper;
 import com.sipoh.dispositif.repository.DispositifRepo;
 import com.sipoh.dispositif.repository.EnregistrementAudioRepo;
-import java.nio.file.Path;
-
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.util.UUID;
-
-
-
-
-import java.io.IOException;
-import java.net.MalformedURLException;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +34,7 @@ public class AudioService {
 
     private final DispositifRepo dispositifRepo;
     
-    private final String storageLocation = "/home/zeukeng/Documents/osc/fileSave/";
+    private final String storageLocation = System.getProperty("user.home") + "/Documents/osc/fileSave/";
 
     /*
      * Sauvegarde des audios
@@ -50,6 +44,7 @@ public class AudioService {
 
         // Creer le dossier si necessaire
         File directory = new File(storageLocation);
+        String extension = getFileExtension(file);
 
         if (!directory.exists()) {
             directory.mkdirs();
@@ -63,7 +58,7 @@ public class AudioService {
 
         //Creer l'instance d'EnregitrementAudio              
         EnregistrementAudio audio =  audioMapper.toAufioEntity(audioDto);
-        String uniqueFileName = UUID.randomUUID().toString();
+        String uniqueFileName = UUID.randomUUID().toString()+extension;
 
         audio.setId(uniqueFileName);
         audio.setDispositif(dispo);
@@ -76,14 +71,25 @@ public class AudioService {
 
         audioRepo.save(audio);
 
-        String fileName = uniqueFileName;
-
-        Path filePath = Paths.get(storageLocation + fileName);
+        Path filePath = Paths.get(storageLocation + uniqueFileName );
 
         Files.copy(file.getInputStream(), filePath);
 
         return audioMapper.toAudioDto(audio);
     }
+
+    /*
+     * Recuperation de l'extension du fichier
+     */
+
+    public String getFileExtension(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null && originalFilename.contains(".")) {
+            return "."+originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        }
+        return ""; // Retourne une chaîne vide si aucune extension n'est trouvée
+    }
+
 
 
     /*

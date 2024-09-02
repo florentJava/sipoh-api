@@ -27,7 +27,7 @@ public class AuthService {
             var uspt = new UsernamePasswordAuthenticationToken(username, password);
 
             Authentication authentication = authenticationManager.authenticate(uspt);
-            
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             
             UserPrincipal  principal =  (UserPrincipal) authentication.getPrincipal();

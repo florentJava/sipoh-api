@@ -5,12 +5,12 @@ spring:
 
 
     datasource:
-        # url: "jdbc:mysql://sipohdb.cvqe6ouoifkn.us-east-2.rds.amazonaws.com:3306/sipohdb"
-        # username: "admin"
-        # password: "LBa0vxHe9uleF2bu9f3B"
-        url: "jdbc:mysql://localhost:3306/dispositif"
-        username: "root"
-        password: ""
+        url: "jdbc:mysql://sipohdb.cvqe6ouoifkn.us-east-2.rds.amazonaws.com:3306/sipohdb"
+        username: "admin"
+        password: "LBa0vxHe9uleF2bu9f3B"
+        # url: "jdbc:mysql://localhost:3306/dispositif"
+        # username: "root"
+        # password: ""
         driver-class-name: com.mysql.cj.jdbc.Driver
 
     jpa:
@@ -47,6 +47,26 @@ server:
     port: 8082
     servlet: 
         context-path: /cb   
+
+google:
+  oauth2:
+    client-id: "30509143239-3tscua2cc2pq59d6ot9ub71bhptotb66.apps.googleusercontent.com"
+    client-secret: "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"
+    redirect-uri: "http://sipoh.net:8082/cb/oauth2/callback/google"
+    auth-uri: "https://accounts.google.com/o/oauth2/auth"
+    token-uri: "https://oauth2.googleapis.com/token"
+
+jwt:
+  secret : "myscretkey"
+  time: 100
+
+audio:
+    path : "~/Documents/osc/fileSave/"
+
+twilio:
+    sid: AC4fa1c995198c6475f6af44928afc345c  # Remplacez YOUR_ACCOUNT_SID par votre Account SID Twilio
+    token: b09bd976d48f0efc3aa1fb088bf4eec4  # Remplacez YOUR_AUTH_TOKEN par votre Auth Token Twilio
+    number: +19528563145  # Remplacez YOUR_TWILIO_PHONE_NUMBER par votre numéro Twilio
 
 
     

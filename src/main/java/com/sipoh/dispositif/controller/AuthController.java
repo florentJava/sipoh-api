@@ -1,55 +1,72 @@
 package com.sipoh.dispositif.controller;
 
-import org.hibernate.mapping.Map;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sipoh.dispositif.entity.UserEntity;
 import com.sipoh.dispositif.model.LoginRequest;
 import com.sipoh.dispositif.model.LoginResponse;
+import com.sipoh.dispositif.repository.UserEntityRepository;
+import com.sipoh.dispositif.security.JwtIssuer;
 import com.sipoh.dispositif.service.AuthService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-
-
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
+    private final UserEntityRepository userRepo;
+    private final JwtIssuer jwtIssuer;
 
 
-    @PostMapping("/auth/login")
+
+    @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated  LoginRequest request){
-
 
         System.out.println(request.toString());
 
         try {
             return ResponseEntity.ok(authService.loginService(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
-            // Crée une ResponseEntity avec le statut HTTP 500 (Internal Server Error)
 
+            // Crée une ResponseEntity avec le statut HTTP 500 (Internal Server Error)
             System.out.println(e.getMessage());
             return ResponseEntity.status(404).body(new LoginResponse("error"));        
         }
-        
-
     }
 
-    @PostMapping("/getGoogleCode")
-    public String postMethodName(@RequestBody String entity) {
+    @PostMapping("/login/{email}")
+    public String loginWithEmail(@PathVariable String email) {
         //TODO: process POST request
         
-        return entity;
+        UserEntity userEntity = userRepo.findByEmail(email)
+        .orElseThrow(() -> new EntityNotFoundException("Email introuvable"));
+
+                List<String> roles = new ArrayList<>();
+
+        userEntity.getRoles().forEach(role -> {
+            roles.add(role.toString());
+        });
+
+        String token = jwtIssuer.issueToken(userEntity.getEmail(), userEntity.getEmail(), roles);
+        return token;
     }
+    
+
     
 
 }
