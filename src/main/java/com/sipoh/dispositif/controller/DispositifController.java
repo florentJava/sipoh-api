@@ -3,6 +3,7 @@ package com.sipoh.dispositif.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,6 @@ import com.sipoh.dispositif.service.ContactService;
 import com.sipoh.dispositif.service.DispositifService;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,7 +30,6 @@ public class DispositifController implements DispositifInterface {
 
     @Override
     public ResponseEntity<DispositifDto> createDispositif(@Valid @RequestBody DispositifDto dispositifDto){
-        System.out.println(dispositifDto);
         return ResponseEntity.ok().body(dispositifService.create(dispositifDto));
     }
 
@@ -71,7 +69,10 @@ public class DispositifController implements DispositifInterface {
     public ResponseEntity<DispositifDto> setDispositifStatut(String dispo_id,String statut) {
         // TODO Auto-generated method stub
 
-        throw new UnsupportedOperationException("Unimplemented method 'setDispositifStatut'");
+        DispositifDto dispoDto = dispositifService.setDispositifStatut(dispo_id, statut);
+
+        return ResponseEntity.ok().body(dispoDto);
+
     }
 
 

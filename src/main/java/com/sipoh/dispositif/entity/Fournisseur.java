@@ -1,7 +1,6 @@
 package com.sipoh.dispositif.entity;
 
-
-
+import java.util.List;
 import java.util.UUID;
 
 import com.sipoh.dispositif.entity.enumeration.ContactProfil;
@@ -14,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,32 +24,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ContactUrgence {
+
+public class Fournisseur {
 
     @Id
     private String id;
-
-
-    @Column
-    private String numero;
 
     @Column
     private String nom;
 
     @Column
-    private String prenom;
+    private String email;
 
-    // Le contact d'urgence est il votre pere , mere etc ?
-    @Enumerated(EnumType.STRING)
-    private ContactProfil profil; 
+    @Column 
+    private String tel;
 
-    @ManyToOne(        
-        cascade = { 
-        CascadeType.PERSIST, 
-        CascadeType.MERGE 
-        })
-    @JoinColumn(name="id_dispositif")
-    private Dispositif dispositif;
+    @OneToMany(
+    mappedBy = "fournisseur"
+    )
+    private List<Dispositif> dispositifs;
+
+
 
     @PrePersist
     public void prePersist() {
@@ -57,5 +52,5 @@ public class ContactUrgence {
             id = UUID.randomUUID().toString();
         }
     }
-
+    
 }

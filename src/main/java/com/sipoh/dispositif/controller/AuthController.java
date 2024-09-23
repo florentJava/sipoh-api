@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sipoh.dispositif.controller.api.AuthInterface;
 import com.sipoh.dispositif.entity.UserEntity;
 import com.sipoh.dispositif.model.LoginRequest;
 import com.sipoh.dispositif.model.LoginResponse;
@@ -26,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthInterface {
 
     private final AuthService authService;
     private final UserEntityRepository userRepo;
@@ -35,9 +36,8 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @Override
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated  LoginRequest request){
-
-        System.out.println(request.toString());
 
         try {
             return ResponseEntity.ok(authService.loginService(request.getEmail(), request.getPassword()));
@@ -50,8 +50,8 @@ public class AuthController {
     }
 
     @PostMapping("/login/{email}")
-    public String loginWithEmail(@PathVariable String email) {
-        //TODO: process POST request
+    @Override
+    public LoginResponse loginWithEmail(@PathVariable String email) {
         
         UserEntity userEntity = userRepo.findByEmail(email)
         .orElseThrow(() -> new EntityNotFoundException("Email introuvable"));
@@ -63,7 +63,9 @@ public class AuthController {
         });
 
         String token = jwtIssuer.issueToken(userEntity.getEmail(), userEntity.getEmail(), roles);
-        return token;
+
+        LoginResponse loginResponse = new LoginResponse(token);
+        return loginResponse;
     }
     
 

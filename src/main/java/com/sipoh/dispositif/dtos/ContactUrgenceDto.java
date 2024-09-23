@@ -1,13 +1,13 @@
 package com.sipoh.dispositif.dtos;
 
 
-import lombok.*;
 import com.sipoh.dispositif.entity.enumeration.ContactProfil;
 
 import jakarta.validation.constraints.NotNull;
-
-
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
@@ -16,11 +16,10 @@ import jakarta.validation.constraints.Size;
 @AllArgsConstructor
 public class ContactUrgenceDto {
 
-    @Size(min = 1, message = "L'ID doit contenir au moins un caractère")
     private String id;
 
     @NotNull(message = "Le numero ne doit etre null")
-    private Integer numero;
+    private String numero;
 
     @NotNull(message = "Le nom ne doit etre null")
     private String nom;

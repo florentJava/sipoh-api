@@ -1,15 +1,25 @@
 package com.sipoh.dispositif.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import java.util.UUID;
+
 import com.sipoh.dispositif.entity.enumeration.Role;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import jakarta.persistence.*;
-import java.util.List;
-import java.util.UUID;
 
 
 
@@ -43,6 +53,8 @@ public class UserEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
+
+
 
 
     @PrePersist
